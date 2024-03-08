@@ -5,9 +5,11 @@ public class Particle {
 
     private float x;
     private float y;
-    private int radius;
+    private float radius;
 
-    public Particle(float radius, Grid grid){
+    /*
+    Mejor hagamos que una particula no tenga idea de la Grid
+    public Particle(float radius){
         Random random = new Random();
         this.x = random.nextFloat(grid.getL());
         this.y = random.nextFloat(grid.getL());
@@ -16,6 +18,14 @@ public class Particle {
         } else {
             grid.addParticleWithRadius(this);
         }
+    }
+    */
+
+    public Particle(float L, float radius){
+        Random random = new Random();
+        this.x = random.nextFloat(L);
+        this.y = random.nextFloat(L);
+        this.radius = radius;
     }
 
     public float getX() {
@@ -34,11 +44,11 @@ public class Particle {
         this.y = y;
     }
 
-    public int getRadius() {
+    public float getRadius() {
         return radius;
     }
 
-    public void setRadius(int radius) {
+    public void setRadius(float radius) {
         this.radius = radius;
     }
 
@@ -53,6 +63,11 @@ public class Particle {
     @Override
     public int hashCode() {
         return Objects.hash(x, y, radius);
+    }
+
+    @Override
+    public String toString() {
+        return "x:" + x + ", Y:" + y;
     }
 }
 
