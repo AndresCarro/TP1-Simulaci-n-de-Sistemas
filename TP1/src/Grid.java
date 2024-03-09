@@ -31,10 +31,26 @@ public class Grid {
         int gridX = (int) Math.floor(particle.getX() / Msize);
         int gridY = (int) Math.floor(particle.getY() / Msize);
 
+        particle.setxCell(gridX);
+        particle.setyCell(gridY);
+        particle.setNeighbourCells(generateNeighbourCells(gridX, gridY));
+        System.out.println(particle);
+
+        for(int[] cells: generateNeighbourCells(gridX, gridY)){
+            System.out.println(cells[0] + "--" + cells[1]);
+        }
+
         if (ParticleGrid[gridX][gridY] == null){
             ParticleGrid[gridX][gridY] = new ParticlesList(new ArrayList<>());
         }
         return ParticleGrid[gridX][gridY].addParticle(particle);
+    }
+
+    public int[][] generateNeighbourCells(int gridX, int gridY){
+        return new int[][]{{gridX, (gridY+1)%M},
+                {(gridX+1)%M, (gridY+1)%M},
+                {(gridX+1)%M, gridY},
+                {(gridX+1)%M, (gridY-1+M)%M}};
     }
 
     public void printGrid(){

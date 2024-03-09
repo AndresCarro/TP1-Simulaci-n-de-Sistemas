@@ -6,20 +6,9 @@ public class Particle {
     private float x;
     private float y;
     private float radius;
-
-    /*
-    Mejor hagamos que una particula no tenga idea de la Grid
-    public Particle(float radius){
-        Random random = new Random();
-        this.x = random.nextFloat(grid.getL());
-        this.y = random.nextFloat(grid.getL());
-        if (radius == 0) {
-            grid.addParticle(this);
-        } else {
-            grid.addParticleWithRadius(this);
-        }
-    }
-    */
+    private int xCell;
+    private int yCell;
+    private int[][] neighbourCells;
 
     public Particle(float L, float radius){
         Random random = new Random();
@@ -52,6 +41,30 @@ public class Particle {
         this.radius = radius;
     }
 
+    public int getxCell() {
+        return xCell;
+    }
+
+    public void setxCell(int xCell) {
+        this.xCell = xCell;
+    }
+
+    public int getyCell() {
+        return yCell;
+    }
+
+    public void setyCell(int yCell) {
+        this.yCell = yCell;
+    }
+
+    public int[][] getNeighbourCells() {
+        return neighbourCells;
+    }
+
+    public void setNeighbourCells(int[][] neighbourCells) {
+        this.neighbourCells = neighbourCells;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,7 +80,7 @@ public class Particle {
 
     @Override
     public String toString() {
-        return "x:" + x + ", Y:" + y;
+        return "x:" + x + ", Y:" + y + ", gridX:" + xCell + ", gridY:" + yCell;
     }
 }
 
