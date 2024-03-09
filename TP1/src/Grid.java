@@ -3,11 +3,11 @@ import java.util.ArrayList;
 public class Grid {
 
     private final int M;
-    private final float L;
-    private final float Msize;
+    private final double L;
+    private final double Msize;
     private final ParticlesList[][] ParticleGrid;
 
-    public Grid(int M, float L){
+    public Grid(int M, double L){
         this.M = M;
         this.L = L;
         this.Msize = L/M;
@@ -15,11 +15,11 @@ public class Grid {
         this.ParticleGrid = new ParticlesList[M][M];
     }
 
-    public float getM() {
+    public double getM() {
         return M;
     }
 
-    public float getL() {
+    public double getL() {
         return L;
     }
 

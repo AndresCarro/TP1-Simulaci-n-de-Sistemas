@@ -5,13 +5,18 @@ public class SimulationFactory {
 
     private final List<Particle> ParticlesList;
     private final Grid SimulatedGrid;
-    private final float radiusNeighbour;
+    private final double radiusNeighbour;
+    private final List<Particle>[] neighbourParticlesCIM;
 
-    public SimulationFactory(int M, float L, int N, float radiusParticle, float radiusNeighbour) {
+
+    public SimulationFactory(int M, double L, int N, double radiusParticle, double radiusNeighbour) {
         this.radiusNeighbour = radiusNeighbour;
         this.SimulatedGrid = new Grid(M, L);
         this.ParticlesList = new ArrayList<>();
+        this.neighbourParticlesCIM = new List[N];
+
         for (int i = 0; i < N; i++) {
+            this.neighbourParticlesCIM[i] = new ArrayList<>();
             Particle auxParticle = new Particle(L, radiusParticle);
             while (!this.SimulatedGrid.addParticle(auxParticle)) {
                 auxParticle = new Particle(L, radiusParticle);
@@ -25,6 +30,7 @@ public class SimulationFactory {
             for(int[] neighbourCell : particle1.getNeighbourCells()){
                 ParticlesList aux = SimulatedGrid.getParticleGrid()[neighbourCell[0]][neighbourCell[1]];
                 if(aux != null){
+                    System.out.println("analizando: " + neighbourCell[0] + "--" + neighbourCell[1]);
                     for(Particle particle2 : aux.getParticles()){
                         if(isNeighbour(particle1, particle2)) {
                             System.out.println("-------");

@@ -3,41 +3,41 @@ import java.util.Random;
 
 public class Particle {
 
-    private float x;
-    private float y;
-    private float radius;
+    private double x;
+    private double y;
+    private double radius;
     private int xCell;
     private int yCell;
     private int[][] neighbourCells;
 
-    public Particle(float L, float radius){
+    public Particle(double L, double radius){
         Random random = new Random();
-        this.x = random.nextFloat(L);
-        this.y = random.nextFloat(L);
+        this.x = random.nextDouble(L);
+        this.y = random.nextDouble(L);
         this.radius = radius;
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public float getRadius() {
+    public double getRadius() {
         return radius;
     }
 
-    public void setRadius(float radius) {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
@@ -70,7 +70,7 @@ public class Particle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Particle particle = (Particle) o;
-        return Float.compare(particle.x, x) == 0 && Float.compare(particle.y, y) == 0 && radius == particle.radius;
+        return Double.compare(particle.x, x) == 0 && Double.compare(particle.y, y) == 0 && radius == particle.radius;
     }
 
     @Override

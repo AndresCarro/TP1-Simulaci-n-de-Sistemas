@@ -6,10 +6,10 @@ public class Main {
 
         // TODO: Leer de un archivo
         int M = 10;
-        float L = 30;
-        float radius = 9.8F;
+        double L = 30;
+        double radius = 9.8F;
         int N = 10;
-        float radiusNeighbour = 3;
+        double radiusNeighbour = 3;
 
         SimulationFactory simulator = new SimulationFactory(M, L, N, radius, radiusNeighbour);
 
