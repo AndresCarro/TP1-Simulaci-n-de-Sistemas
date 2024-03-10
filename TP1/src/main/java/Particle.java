@@ -3,6 +3,8 @@ import java.util.Random;
 
 public class Particle {
 
+    private static int nextId = 0;
+    private int id;
     private double x;
     private double y;
     private double radius;
@@ -11,10 +13,15 @@ public class Particle {
     private int[][] neighbourCells;
 
     public Particle(double L, double radius){
+        this.id = nextId++;
         Random random = new Random();
         this.x = random.nextDouble(L);
         this.y = random.nextDouble(L);
         this.radius = radius;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public double getX() {
