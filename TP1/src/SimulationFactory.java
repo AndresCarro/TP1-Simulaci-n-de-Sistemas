@@ -69,14 +69,11 @@ public class SimulationFactory {
             for(int j=i+1; j<ParticlesList.size(); j++) {
                 if(isNeighbour(ParticlesList.get(i), ParticlesList.get(j))) {
                     counter++;
-                    /*
                     System.out.println("-------");
                     System.out.println("Son vecinas");
                     System.out.println(ParticlesList.get(i));
                     System.out.println(ParticlesList.get(j));
                     System.out.println("-------");
-
-                     */
                 }
             }
         }

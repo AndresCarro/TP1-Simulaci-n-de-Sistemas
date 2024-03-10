@@ -8,7 +8,7 @@ public class Main {
         int M = 10;
         double L = 30;
         double radius = 9.8F;
-        int N = 1000;
+        int N = 10;
         double radiusNeighbour = 3;
 
         SimulationFactory simulator = new SimulationFactory(M, L, N, radius, radiusNeighbour);
