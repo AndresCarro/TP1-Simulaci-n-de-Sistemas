@@ -1,12 +1,2 @@
-Particle id: 11	 Neigbour particles: 10 
-Particle id: 10	 Neigbour particles: 11 
-Particle id: 6	 Neigbour particles: -
-Particle id: 4	 Neigbour particles: -
-Particle id: 1	 Neigbour particles: -
-Particle id: 9	 Neigbour particles: -
-Particle id: 8	 Neigbour particles: -
-Particle id: 3	 Neigbour particles: -
-Particle id: 5	 Neigbour particles: -
-Particle id: 0	 Neigbour particles: -
-Particle id: 2	 Neigbour particles: -
-Particle id: 7	 Neigbour particles: -
+Particle id: 1	 Neigbour particles: 0 
+Particle id: 0	 Neigbour particles: 1 

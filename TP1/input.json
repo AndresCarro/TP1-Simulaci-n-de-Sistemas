@@ -4,5 +4,6 @@
   "radius": 0.05,
   "N": 10,
   "radiusNeighbour": 0.11,
-  "boundaryConditions": true
+  "boundaryConditions": true,
+  "particlesInput": "particles.txt"
 }

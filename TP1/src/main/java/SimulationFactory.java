@@ -18,20 +18,23 @@ public class SimulationFactory {
             }
             this.ParticlesList.add(auxParticle);
         }
-        Particle aux1 = new Particle(0.1, 0.1, radiusParticle);
-        this.SimulatedGrid.addParticle(aux1);
-        this.ParticlesList.add(aux1);
-        Particle aux2 = new Particle(0.1, L - 0.1, radiusParticle);
-        this.SimulatedGrid.addParticle(aux2);
-        this.ParticlesList.add(aux2);
+    }
+
+    public SimulationFactory(int M, double L, double radiusParticle, double radiusNeighbour, boolean boundaryConditions, double[][] particles) {
+        this.SimulatedGrid = new Grid(M, L, boundaryConditions, radiusNeighbour);
+        this.ParticlesList = new ArrayList<>();
+
+        for (double[] positions : particles) {
+            Particle auxParticle = new Particle(positions[0], positions[1], radiusParticle);
+            while (!this.SimulatedGrid.addParticle(auxParticle)) {
+                auxParticle = new Particle(L, radiusParticle);
+            }
+            this.ParticlesList.add(auxParticle);
+        }
     }
 
     public void CIM(){
-        double counter = 0;
         Map<Particle,List<Particle>> particleNeighbours = new HashMap<>();
-        for(Particle particle1 : ParticlesList){
-            particleNeighbours.putIfAbsent(particle1,new LinkedList<>());
-        }
         for(Particle particle1 : ParticlesList){
             for(int[] neighbourCell : particle1.getNeighbourCells()){
                 ParticlesList aux = SimulatedGrid.getParticleGrid()[neighbourCell[0]][neighbourCell[1]];
@@ -41,15 +44,16 @@ public class SimulationFactory {
                         if (!particle2.equals(particle1)) {
                             System.out.println("Calculando: " + particle1 + "--" + particle2);
                             if (SimulatedGrid.isNeighbour(particle1, particle2)) {
-                                counter++;
                                 System.out.println("-------");
                                 System.out.println("Son vecinas");
                                 System.out.println(particle1);
                                 System.out.println(particle2);
                                 System.out.println("-------");
+                                particleNeighbours.putIfAbsent(particle1,new LinkedList<>());
                                 if (!particleNeighbours.get(particle1).contains(particle2)) {
                                     particleNeighbours.get(particle1).add(particle2);
                                 }
+                                particleNeighbours.putIfAbsent(particle2,new LinkedList<>());
                                 if (!particleNeighbours.get(particle2).contains(particle1)) {
                                     particleNeighbours.get(particle2).add(particle1);
                                 }
@@ -81,38 +85,32 @@ public class SimulationFactory {
             */
         }
         writeOutput("cim_output.txt",particleNeighbours);
-        System.out.println("\n\nVecinos de CIM: " + counter + "\n\n");
     }
 
     public void Force(){
-        int counter = 0;
         Map<Particle,List<Particle>> particleNeighbours = new HashMap<>();
-        for(Particle particle1 : ParticlesList){
-            particleNeighbours.putIfAbsent(particle1,new LinkedList<>());
-        }
         for(int i=0; i<ParticlesList.size(); i++) {
             particleNeighbours.putIfAbsent(ParticlesList.get(i),new ArrayList<>());
             for(int j=i+1; j<ParticlesList.size(); j++) {
                 System.out.println("Calculando: " + ParticlesList.get(i) + "--" + ParticlesList.get(j));
                 if(SimulatedGrid.isNeighbour(ParticlesList.get(i), ParticlesList.get(j))) {
-                    counter++;
                     System.out.println("-------");
                     System.out.println("Son vecinas");
                     System.out.println(ParticlesList.get(i));
                     System.out.println(ParticlesList.get(j));
                     System.out.println("-------");
+                    particleNeighbours.putIfAbsent(ParticlesList.get(i),new LinkedList<>());
                     if(!particleNeighbours.get(ParticlesList.get(i)).contains(ParticlesList.get(j))){
                         particleNeighbours.get(ParticlesList.get(i)).add(ParticlesList.get(j));
                     }
+                    particleNeighbours.putIfAbsent(ParticlesList.get(j),new LinkedList<>());
                     if(!particleNeighbours.get(ParticlesList.get(j)).contains(ParticlesList.get(i))){
                         particleNeighbours.get(ParticlesList.get(j)).add(ParticlesList.get(i));
                     }
-                    //particleNeighbours.get(ParticlesList.get(j)).add(ParticlesList.get(i));
                 }
             }
         }
         writeOutput("force_output.txt",particleNeighbours);
-        System.out.println("\n\nVecinos de Force: " + counter + "\n\n");
     }
 
 

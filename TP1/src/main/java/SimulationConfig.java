@@ -5,6 +5,7 @@ public class SimulationConfig {
     private int N;
     private double radiusNeighbour;
     private boolean boundaryConditions;
+    private String particlesInput;
 
     public SimulationConfig(){
 
@@ -46,12 +47,24 @@ public class SimulationConfig {
         return N;
     }
 
+    public void setBoundaryConditions(boolean boundaryConditions) {
+        this.boundaryConditions = boundaryConditions;
+    }
+
     public double getRadiusNeighbour() {
         return radiusNeighbour;
     }
 
     public boolean getBoundaryConditions() {
         return boundaryConditions;
+    }
+
+    public String getParticlesInput() {
+        return particlesInput;
+    }
+
+    public void setParticlesInput(String particlesInput) {
+        this.particlesInput = particlesInput;
     }
 
     @Override

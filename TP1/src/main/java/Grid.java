@@ -6,9 +6,8 @@ public class Grid {
     private final double L;
     private final double Msize;
     private final double radiusNeighbour;
-
-    private final ParticlesList[][] ParticleGrid;
     private final boolean boundaryConditions;
+    private final ParticlesList[][] ParticleGrid;
 
     public Grid(int M, double L, boolean boundaryConditions, double radiusNeighbour){
         this.boundaryConditions = boundaryConditions;
@@ -16,8 +15,6 @@ public class Grid {
         this.L = L;
         this.Msize = L/M;
         this.radiusNeighbour = radiusNeighbour;
-
-
         this.ParticleGrid = new ParticlesList[M][M];
     }
 
@@ -40,8 +37,8 @@ public class Grid {
         particle.setxCell(gridX);
         particle.setyCell(gridY);
         particle.setNeighbourCells(generateNeighbourCells(gridX, gridY));
-        System.out.println(particle);
 
+        System.out.println(particle);
         for(int[] cells: generateNeighbourCells(gridX, gridY)) {
             System.out.println(cells[0] + "--" + cells[1]);
         }
@@ -152,6 +149,19 @@ public class Grid {
         }
     }
 
+    public boolean isNeighbour(Particle particle1, Particle particle2){
+        double directx = Math.abs(particle1.getX() - particle2.getX());
+        double dx = (directx*2 > L && boundaryConditions)? (L - directx) : directx;
+
+        double directy = Math.abs(particle1.getY() - particle2.getY());
+        double dy = (directy*2 > L && boundaryConditions)? (L - directy) : directy;
+
+        System.out.println(dy + "---" + dx);
+        double hypotenuse = Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);
+        double deltaBorder = hypotenuse - (particle1.getRadius() + particle2.getRadius());
+        return radiusNeighbour>deltaBorder;
+    }
+
     public void printGrid(){
         int y, x=0;
         for(ParticlesList[] column: ParticleGrid){
@@ -168,26 +178,5 @@ public class Grid {
             }
         }
     }
-
-    public boolean isNeighbour(Particle particle1, Particle particle2){
-        double directx = Math.abs(particle1.getX() - particle2.getX());
-        double dx = (directx*2 > L && boundaryConditions)? (L - directx) : directx;
-
-        double directy = Math.abs(particle1.getY() - particle2.getY());
-        double dy = (directy*2 > L && boundaryConditions)? (L - directy) : directy;
-
-        System.out.println(dy + "---" + dx);
-        double hypotenuse = Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);
-        double deltaBorder = hypotenuse - (particle1.getRadius() + particle2.getRadius());
-        return radiusNeighbour>deltaBorder;
-    }
-
-
-    /*
-    public boolean addParticleWithRadius(Particle particle){
-        //TODO
-        return true;
-    }
-    */
 
 }

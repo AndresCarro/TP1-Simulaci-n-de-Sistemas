@@ -1,16 +1,20 @@
 import com.google.gson.Gson;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        SimulationConfig input = readInput("input.json");
-        if(input == null) {
+        SimulationConfig config = readConfig("input.json");
+        if(config == null) {
             return;
         }
 
-        SimulationFactory simulator = new SimulationFactory(input.getM(), input.getL(), input.getN(), input.getRadius(), input.getRadiusNeighbour(), input.getBoundaryConditions());
+        double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
+        SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
+        //SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getN(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions());
 
         // PRINT para saber si esta bien
         //simulator.printParticles();
@@ -22,7 +26,7 @@ public class Main {
     }
 
 
-    public static SimulationConfig readInput(String path){
+    public static SimulationConfig readConfig(String path){
         Gson gson = new Gson();
         SimulationConfig sConfig = null;
         try (FileReader reader = new FileReader("input.json")) {
@@ -32,5 +36,39 @@ public class Main {
             e.printStackTrace();
         }
         return sConfig;
+    }
+
+    public static List<double[]>  readParticles(String path) {
+        List<double[]> vector = new ArrayList<>();
+
+        try {
+            File file = new File(path);
+            Scanner scanner = new Scanner(file);
+
+            // Leer el archivo línea por línea
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+
+                // Dividir la línea en dos números
+                String[] parts = line.split("\\s+");
+                if (parts.length == 2) {
+                    double[] pair = new double[2];
+                    pair[0] = Double.parseDouble(parts[0]);
+                    pair[1] = Double.parseDouble(parts[1]);
+                    vector.add(pair);
+                }
+            }
+
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Mostrar el vector resultante
+        //for (double[] pair : vector) {
+        //    System.out.println("[" + pair[0] + ", " + pair[1] + "]");
+        //}
+        return vector;
+
     }
 }

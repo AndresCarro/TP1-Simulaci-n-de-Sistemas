@@ -2,9 +2,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Particle {
-
     private static int nextId = 0;
-    private int id;
+    private final int id;
     private double x;
     private double y;
     private double radius;
