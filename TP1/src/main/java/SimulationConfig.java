@@ -4,6 +4,7 @@ public class SimulationConfig {
     private double radius;
     private int N;
     private double radiusNeighbour;
+    private boolean boundaryConditions;
 
     public SimulationConfig(){
 
@@ -47,6 +48,10 @@ public class SimulationConfig {
 
     public double getRadiusNeighbour() {
         return radiusNeighbour;
+    }
+
+    public boolean getBoundaryConditions() {
+        return boundaryConditions;
     }
 
     @Override

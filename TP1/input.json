@@ -1,7 +1,8 @@
 {
   "M": 10,
   "L": 30,
-  "radius": 9.8,
+  "radius": 0.05,
   "N": 10,
-  "radiusneighbour": 3
+  "radiusNeighbour": 0.11,
+  "boundaryConditions": true
 }
