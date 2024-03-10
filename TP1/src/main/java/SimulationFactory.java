@@ -64,30 +64,15 @@ public class SimulationFactory {
                 }
             }
         }
-        StringBuilder sb = new StringBuilder();
-        String fileName = "cim_output.txt";
-        try (FileWriter writer = new FileWriter(fileName)) {
-            for(Particle particle: particleNeighbours.keySet()) {
-                sb.append("Particle id: ").append(particle.getId()).append("\t Neigbour particles: ");
-                if(particleNeighbours.get(particle).isEmpty()) {
-                    sb.append("-");
-                }
-                List<Particle> particleItem = particleNeighbours.get(particle);
-                for(Particle neighbours : particleItem) {
-                    sb.append(neighbours.getId()).append(" ");
-                }
-                sb.append("\n");
-            }
-            writer.write(sb.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeOutput("cim_output.txt",particleNeighbours);
         System.out.println("\n\n\nCounter:" + counter + "\n\n\n");
     }
 
     public void Force(){
         int counter = 0;
+        Map<Particle,List<Particle>> particleNeighbours = new HashMap<>();
         for(int i=0; i<ParticlesList.size(); i++) {
+            particleNeighbours.putIfAbsent(ParticlesList.get(i),new ArrayList<>());
             for(int j=i+1; j<ParticlesList.size(); j++) {
                 if(isNeighbour(ParticlesList.get(i), ParticlesList.get(j))) {
                     counter++;
@@ -96,11 +81,12 @@ public class SimulationFactory {
                     System.out.println(ParticlesList.get(i));
                     System.out.println(ParticlesList.get(j));
                     System.out.println("-------");
+                    particleNeighbours.get(ParticlesList.get(i)).add(ParticlesList.get(j));
                 }
             }
         }
+        writeOutput("force_output.txt",particleNeighbours);
         System.out.println("\n\n\ncounter:" + counter + "\n\n\n");
-
     }
 
     public boolean isNeighbour(Particle particle1, Particle particle2){
@@ -120,6 +106,26 @@ public class SimulationFactory {
     public void printGrid(){
         System.out.println("Grilla:");
         SimulatedGrid.printGrid();
+    }
+
+    public void writeOutput(String filename, Map<Particle,List<Particle>> particleNeighbours) {
+        StringBuilder sb = new StringBuilder();
+        try (FileWriter writer = new FileWriter(filename)) {
+            for(Particle particle: particleNeighbours.keySet()) {
+                sb.append("Particle id: ").append(particle.getId()).append("\t Neigbour particles: ");
+                if(particleNeighbours.get(particle).isEmpty()) {
+                    sb.append("-");
+                }
+                List<Particle> particleItem = particleNeighbours.get(particle);
+                for(Particle neighbours : particleItem) {
+                    sb.append(neighbours.getId()).append(" ");
+                }
+                sb.append("\n");
+            }
+            writer.write(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
