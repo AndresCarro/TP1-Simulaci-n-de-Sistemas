@@ -2,7 +2,7 @@
   "M": 10,
   "L": 30,
   "radius": 0.05,
-  "N": 10,
+  "N": 10000,
   "radiusNeighbour": 0.11,
   "boundaryConditions": true,
   "particlesInput": "particles.txt"

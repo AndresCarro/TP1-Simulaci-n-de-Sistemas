@@ -20,9 +20,20 @@ public class Main {
         //simulator.printParticles();
         //simulator.printGrid();
 
+        long startTimeCIM = System.currentTimeMillis();
         simulator.CIM();
-        System.out.println("CAMBIO DE METODO:");
+        long endTimeCIM = System.currentTimeMillis();
+        long executionTimeCIM = endTimeCIM - startTimeCIM;
+        System.out.println("Tiempo de ejecución de CIM: " + executionTimeCIM + " milisegundos");
+        simulator.printNeighboursCIM();
+
+
+        long startTimeForce = System.currentTimeMillis();
         simulator.Force();
+        long endTimeForce = System.currentTimeMillis();
+        long executionTimeForce = endTimeForce - startTimeForce;
+        System.out.println("Tiempo de ejecución de Force: " + executionTimeForce + " milisegundos");
+        simulator.printNeighboursForce();
     }
 
 
@@ -31,7 +42,7 @@ public class Main {
         SimulationConfig sConfig = null;
         try (FileReader reader = new FileReader("input.json")) {
             sConfig = gson.fromJson(reader, SimulationConfig.class);
-            System.out.println(sConfig);
+            //System.out.println(sConfig);
         } catch (IOException e) {
             e.printStackTrace();
         }

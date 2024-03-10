@@ -38,10 +38,10 @@ public class Grid {
         particle.setyCell(gridY);
         particle.setNeighbourCells(generateNeighbourCells(gridX, gridY));
 
-        System.out.println(particle);
-        for(int[] cells: generateNeighbourCells(gridX, gridY)) {
-            System.out.println(cells[0] + "--" + cells[1]);
-        }
+        //System.out.println(particle);
+        //for(int[] cells: generateNeighbourCells(gridX, gridY)) {
+        //    System.out.println(cells[0] + "--" + cells[1]);
+        //}
 
         if (ParticleGrid[gridX][gridY] == null){
             ParticleGrid[gridX][gridY] = new ParticlesList(new ArrayList<>());
@@ -156,7 +156,7 @@ public class Grid {
         double directy = Math.abs(particle1.getY() - particle2.getY());
         double dy = (directy*2 > L && boundaryConditions)? (L - directy) : directy;
 
-        System.out.println(dy + "---" + dx);
+        //System.out.println(dy + "---" + dx);
         double hypotenuse = Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);
         double deltaBorder = hypotenuse - (particle1.getRadius() + particle2.getRadius());
         return radiusNeighbour>deltaBorder;
