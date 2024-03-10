@@ -127,4 +127,20 @@ public class SimulationFactory {
         }
     }
 
+    public void wirteOvitoOutput(){
+        String filename = "ovito_output.xyz";
+        StringBuilder sb = new StringBuilder();
+        sb.append(ParticlesList.size());
+        String z = "0.0";
+        try (FileWriter writer = new FileWriter(filename)) {
+            sb.append("\n");
+            for (Particle particle : ParticlesList){
+                sb.append(particle.getX()).append("\t").append(particle.getY()).append("\n");
+            }
+            writer.write(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
