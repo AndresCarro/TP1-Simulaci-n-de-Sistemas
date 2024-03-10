@@ -1,5 +1,0 @@
-M=10
-L=30
-radius=9.8
-N=10
-radiusneighbour=

@@ -6,6 +6,7 @@ public class SimulationConfig {
     private double radiusNeighbour;
     private boolean boundaryConditions;
     private String particlesInput;
+    private int particle;
 
     public SimulationConfig(){
 
@@ -65,6 +66,14 @@ public class SimulationConfig {
 
     public void setParticlesInput(String particlesInput) {
         this.particlesInput = particlesInput;
+    }
+
+    public int getParticle() {
+        return particle;
+    }
+
+    public void setParticle(int particle) {
+        this.particle = particle;
     }
 
     @Override

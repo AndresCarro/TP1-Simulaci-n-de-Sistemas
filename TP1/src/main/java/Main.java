@@ -1,5 +1,4 @@
 import com.google.gson.Gson;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +6,46 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        //oneIteration(config);
+
+        TimeMAnalysis();
+    }
+
+    public static void TimeMAnalysis(){
+        SimulationConfig config = readConfig("inputMTest.json");
+        if(config == null) {
+            return;
+        }
+
+        try {
+            FileWriter writer = new FileWriter("TimeMAnalysis.csv");
+            writer.write("Method, M, Time, results");
+
+            for (int M = 1; M < 40; M++) {
+                double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
+                SimulationFactory simulator = new SimulationFactory(M, config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
+                long startTimeCIM = System.currentTimeMillis();
+                simulator.CIM();
+                long endTimeCIM = System.currentTimeMillis();
+                long tiempoCIM = endTimeCIM - startTimeCIM;
+                writer.write("\nCIM, " + M + ", " + tiempoCIM + ", " + simulator.NeighboursCIMCount());
+
+                long startTimeForce = System.currentTimeMillis();
+                simulator.Force();
+                long endTimeForce = System.currentTimeMillis();
+                long tiempoForce = endTimeForce - startTimeForce;
+                writer.write("\nForce, " + M + ", " + tiempoForce + ", " + simulator.NeighboursForceCount());
+            }
+            writer.close();
+
+        } catch(IOException e){
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+
+    }
+
+    public static void oneIteration(){
         SimulationConfig config = readConfig("input.json");
         if(config == null) {
             return;
@@ -14,28 +53,23 @@ public class Main {
 
         double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
         SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
-        //SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getN(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions());
 
-        // PRINT para saber si esta bien
-        //simulator.printParticles();
-        //simulator.printGrid();
+        int particleSelected = config.getParticle();
+        System.out.println("La particula a revisar es: " + particleSelected);
 
         long startTimeCIM = System.currentTimeMillis();
         simulator.CIM();
         long endTimeCIM = System.currentTimeMillis();
-        long executionTimeCIM = endTimeCIM - startTimeCIM;
-        System.out.println("Tiempo de ejecución de CIM: " + executionTimeCIM + " milisegundos");
+        System.out.println("Tiempo de ejecución de CIM: " + (endTimeCIM - startTimeCIM) + " milisegundos");
         simulator.printNeighboursCIM();
 
 
         long startTimeForce = System.currentTimeMillis();
         simulator.Force();
         long endTimeForce = System.currentTimeMillis();
-        long executionTimeForce = endTimeForce - startTimeForce;
-        System.out.println("Tiempo de ejecución de Force: " + executionTimeForce + " milisegundos");
+        System.out.println("Tiempo de ejecución de Force: " + (endTimeForce - startTimeForce) + " milisegundos");
         simulator.printNeighboursForce();
     }
-
 
     public static SimulationConfig readConfig(String path){
         Gson gson = new Gson();

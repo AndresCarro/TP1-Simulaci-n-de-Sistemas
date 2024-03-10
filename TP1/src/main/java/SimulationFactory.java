@@ -93,6 +93,17 @@ public class SimulationFactory {
         writeOutput("cim_output.txt",particleNeighboursCIM);
     }
 
+
+    public int NeighboursCIMCount(){
+        int counter = 0;
+        for(Particle particle : ParticlesList) {
+            if(particleNeighboursCIM.get(particle) != null){
+                counter += particleNeighboursCIM.get(particle).size();
+            }
+        }
+        return counter;
+    }
+
     public void Force(){
         this.particleNeighboursForce = new HashMap<>();
         for(int i=0; i<ParticlesList.size(); i++) {
@@ -120,6 +131,17 @@ public class SimulationFactory {
 
     public void printNeighboursForce(){
         writeOutput("force_output.txt",particleNeighboursForce);
+    }
+
+    public int NeighboursForceCount(){
+        int counter = 0;
+
+        for(Particle particle : ParticlesList) {
+            if(particleNeighboursForce.get(particle) != null){
+                counter += particleNeighboursForce.get(particle).size();
+            }
+        }
+        return counter;
     }
 
 
