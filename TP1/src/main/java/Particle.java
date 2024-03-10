@@ -20,6 +20,13 @@ public class Particle {
         this.radius = radius;
     }
 
+    public Particle(double x, double y, double radius){
+        this.id = nextId++;
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+    }
+
     public int getId() {
         return id;
     }

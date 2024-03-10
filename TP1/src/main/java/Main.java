@@ -7,11 +7,12 @@ public class Main {
         // TODO: Leer de un archivo
         int M = 10;
         double L = 30;
-        double radius = 9.8F;
+        double radius = 0.05;
         int N = 10;
-        double radiusNeighbour = 3;
+        double radiusNeighbour = 0.11;
+        boolean boundaryConditions = true;
 
-        SimulationFactory simulator = new SimulationFactory(M, L, N, radius, radiusNeighbour);
+        SimulationFactory simulator = new SimulationFactory(M, L, N, radius, radiusNeighbour, boundaryConditions);
 
         // TEST para saber si esta bien
         //simulator.printParticles();
