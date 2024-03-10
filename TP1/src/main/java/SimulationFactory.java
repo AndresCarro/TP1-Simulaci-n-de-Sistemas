@@ -28,7 +28,9 @@ public class SimulationFactory {
 
     public void CIM(){
         double counter = 0;
+        Map<Particle,List<Particle>> particleNeighbours = new HashMap<>();
         for(Particle particle1 : ParticlesList){
+            particleNeighbours.putIfAbsent(particle1,new ArrayList<>());
             for(int[] neighbourCell : particle1.getNeighbourCells()){
                 ParticlesList aux = SimulatedGrid.getParticleGrid()[neighbourCell[0]][neighbourCell[1]];
                 if(aux != null){
@@ -42,6 +44,7 @@ public class SimulationFactory {
                             System.out.println(particle1);
                             System.out.println(particle2);
                             System.out.println("-------");
+                            particleNeighbours.get(particle1).add(particle2);
                         }
                     }
                 }
@@ -56,11 +59,30 @@ public class SimulationFactory {
                         System.out.println(particle1);
                         System.out.println(particle2);
                         System.out.println("-------");
+                        particleNeighbours.get(particle1).add(particle2);
                     }
                 }
             }
         }
-        System.out.println("\n\n\ncounter:" + counter + "\n\n\n");
+        StringBuilder sb = new StringBuilder();
+        String fileName = "cim_output.txt";
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for(Particle particle: particleNeighbours.keySet()) {
+                sb.append("Particle id: ").append(particle.getId()).append("\t Neigbour particles: ");
+                if(particleNeighbours.get(particle).isEmpty()) {
+                    sb.append("-");
+                }
+                List<Particle> particleItem = particleNeighbours.get(particle);
+                for(Particle neighbours : particleItem) {
+                    sb.append(neighbours.getId()).append(" ");
+                }
+                sb.append("\n");
+            }
+            writer.write(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("\n\n\nCounter:" + counter + "\n\n\n");
     }
 
     public void Force(){
