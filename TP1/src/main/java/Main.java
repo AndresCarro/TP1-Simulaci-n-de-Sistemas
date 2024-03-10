@@ -4,6 +4,25 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+
+        SimulationConfig input = readInput("input.json");
+        if(input == null) {
+            return;
+        }
+
+        SimulationFactory simulator = new SimulationFactory(input.getM(), input.getL(), input.getN(), input.getRadius(), input.getRadiusNeighbour(), input.getBoundaryConditions());
+
+        // PRINT para saber si esta bien
+        //simulator.printParticles();
+        //simulator.printGrid();
+
+        simulator.CIM();
+        System.out.println("CAMBIO DE METODO:");
+        simulator.Force();
+    }
+
+
+    public static SimulationConfig readInput(String path){
         Gson gson = new Gson();
         SimulationConfig sConfig = null;
         try (FileReader reader = new FileReader("input.json")) {
@@ -12,19 +31,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        if(sConfig == null) {
-            return;
-        }
-
-        SimulationFactory simulator = new SimulationFactory(sConfig.getM(), sConfig.getL(), sConfig.getN(), sConfig.getRadius(), sConfig.getRadiusNeighbour(), sConfig.getBoundaryConditions());
-
-        // TEST para saber si esta bien
-        //simulator.printParticles();
-        //simulator.printGrid();
-
-        simulator.CIM();
-        System.out.println("CAMBIO DE METODO:");
-        simulator.Force();
+        return sConfig;
     }
 }
