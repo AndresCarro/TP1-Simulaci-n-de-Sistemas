@@ -64,7 +64,7 @@ public class SimulationFactory {
             }
         }
         writeOutput("cim_output.txt",particleNeighbours);
-        System.out.println("\n\n\nCounter:" + counter + "\n\n\n");
+        System.out.println("\n\nVecinos de CIM: " + counter + "\n\n");
     }
 
     public void Force(){
@@ -85,7 +85,7 @@ public class SimulationFactory {
             }
         }
         writeOutput("force_output.txt",particleNeighbours);
-        System.out.println("\n\n\ncounter:" + counter + "\n\n\n");
+        System.out.println("\n\nVecinos de Force: " + counter + "\n\n");
     }
 
     public boolean isNeighbour(Particle particle1, Particle particle2){
