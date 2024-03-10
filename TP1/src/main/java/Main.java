@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Gson gson = new Gson();
         SimulationConfig sConfig = null;
-        try (FileReader reader = new FileReader("TP1/input.json")) {
+        try (FileReader reader = new FileReader("input.json")) {
             sConfig = gson.fromJson(reader, SimulationConfig.class);
             System.out.println(sConfig);
         } catch (IOException e) {
