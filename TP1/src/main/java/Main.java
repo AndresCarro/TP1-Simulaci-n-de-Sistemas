@@ -20,22 +20,23 @@ public class Main {
 
         try {
             FileWriter writer = new FileWriter("TimeMAnalysis.csv");
-            writer.write("Method, M, Time, results");
+            writer.write("Method,M,Time,results");
 
             for (int M = 1; M < 40; M++) {
                 double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
                 SimulationFactory simulator = new SimulationFactory(M, config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
+
                 long startTimeCIM = System.currentTimeMillis();
                 simulator.CIM();
                 long endTimeCIM = System.currentTimeMillis();
                 long tiempoCIM = endTimeCIM - startTimeCIM;
-                writer.write("\nCIM, " + M + ", " + tiempoCIM + ", " + simulator.NeighboursCIMCount());
+                writer.write("\nCIM," + M + "," + tiempoCIM + "," + simulator.NeighboursCIMCount());
 
                 long startTimeForce = System.currentTimeMillis();
                 simulator.Force();
                 long endTimeForce = System.currentTimeMillis();
                 long tiempoForce = endTimeForce - startTimeForce;
-                writer.write("\nForce, " + M + ", " + tiempoForce + ", " + simulator.NeighboursForceCount());
+                writer.write("\nForce," + M + "," + tiempoForce + "," + simulator.NeighboursForceCount());
             }
             writer.close();
 
