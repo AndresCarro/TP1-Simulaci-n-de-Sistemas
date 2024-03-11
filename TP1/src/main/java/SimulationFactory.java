@@ -39,6 +39,7 @@ public class SimulationFactory {
     public void CIM(){
         this.particleNeighboursCIM = new HashMap<>();
         for(Particle particle1 : ParticlesList){
+            particleNeighboursCIM.putIfAbsent(particle1,new LinkedList<>());
             for(int[] neighbourCell : particle1.getNeighbourCells()){
                 ParticlesList aux = SimulatedGrid.getParticleGrid()[neighbourCell[0]][neighbourCell[1]];
                 if(aux != null){
@@ -52,7 +53,6 @@ public class SimulationFactory {
                                 //System.out.println(particle1);
                                 //System.out.println(particle2);
                                 //System.out.println("-------");
-                                particleNeighboursCIM.putIfAbsent(particle1,new LinkedList<>());
                                 if (!particleNeighboursCIM.get(particle1).contains(particle2)) {
                                     particleNeighboursCIM.get(particle1).add(particle2);
                                 }
@@ -89,8 +89,8 @@ public class SimulationFactory {
         }
     }
 
-    public void printNeighboursCIM(){
-        writeOutput("cim_output.txt",particleNeighboursCIM);
+    public void printNeighboursCIM(long totalTime){
+        writeOutput("cim_output.txt",particleNeighboursCIM,totalTime);
     }
 
 
@@ -129,8 +129,8 @@ public class SimulationFactory {
         }
     }
 
-    public void printNeighboursForce(){
-        writeOutput("force_output.txt",particleNeighboursForce);
+    public void printNeighboursForce(long totalTime){
+        writeOutput("force_output.txt",particleNeighboursForce,totalTime);
     }
 
     public int NeighboursForceCount(){
@@ -157,7 +157,7 @@ public class SimulationFactory {
         SimulatedGrid.printGrid();
     }
 
-    public void writeOutput(String filename, Map<Particle,List<Particle>> particleNeighbours) {
+    public void writeOutput(String filename, Map<Particle,List<Particle>> particleNeighbours, long totalTime) {
         StringBuilder sb = new StringBuilder();
         try (FileWriter writer = new FileWriter(filename)) {
             for(Particle particle: particleNeighbours.keySet()) {
@@ -171,21 +171,34 @@ public class SimulationFactory {
                 }
                 sb.append("\n");
             }
+            sb.append("Total time: ").append(totalTime).append("ms");
             writer.write(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void wirteOvitoOutput(){
-        String filename = "ovito_output.xyz";
+    public void writeOvitoOutput(int particleId){
+        String filename = "output.xyz";
+        String COMMON_PARTICLE = "0";
+        String SELECTED_PARTICLE = "1";
+        String NEIGHBOUR_PARTICLE = "2";
         StringBuilder sb = new StringBuilder();
         sb.append(ParticlesList.size());
-        String z = "0.0";
+        Particle selected_particle = ParticlesList.get(particleId);
         try (FileWriter writer = new FileWriter(filename)) {
-            sb.append("\n");
+            sb.append("\n\n");
             for (Particle particle : ParticlesList){
-                sb.append(particle.getX()).append("\t").append(particle.getY()).append("\n");
+                sb.append(particle.getX()).append(" ").append(particle.getY());
+                sb.append(" ");
+                if(particle.getId() == particleId) {
+                    sb.append(SELECTED_PARTICLE);
+                } else if(this.particleNeighboursCIM.get(selected_particle).contains(particle)) {
+                    sb.append(NEIGHBOUR_PARTICLE);
+                } else {
+                    sb.append(COMMON_PARTICLE);
+                }
+                sb.append("\n");
             }
             writer.write(sb.toString());
         } catch (IOException e) {
