@@ -1,2 +1,49 @@
-Particle id: 1	 Neigbour particles: 0 
-Particle id: 0	 Neigbour particles: 1 
+Particle id: 24	 Neigbour particles: -
+Particle id: 17	 Neigbour particles: -
+Particle id: 14	 Neigbour particles: 9 28 37 
+Particle id: 27	 Neigbour particles: 6 40 
+Particle id: 42	 Neigbour particles: -
+Particle id: 43	 Neigbour particles: 0 
+Particle id: 22	 Neigbour particles: 7 28 
+Particle id: 0	 Neigbour particles: 13 43 
+Particle id: 1	 Neigbour particles: -
+Particle id: 2	 Neigbour particles: 9 37 
+Particle id: 39	 Neigbour particles: 8 
+Particle id: 31	 Neigbour particles: -
+Particle id: 48	 Neigbour particles: -
+Particle id: 6	 Neigbour particles: 27 40 
+Particle id: 45	 Neigbour particles: 7 19 29 
+Particle id: 19	 Neigbour particles: 29 45 
+Particle id: 44	 Neigbour particles: 21 
+Particle id: 35	 Neigbour particles: 10 46 
+Particle id: 8	 Neigbour particles: 39 
+Particle id: 23	 Neigbour particles: -
+Particle id: 29	 Neigbour particles: 18 19 45 
+Particle id: 26	 Neigbour particles: -
+Particle id: 33	 Neigbour particles: 3 
+Particle id: 32	 Neigbour particles: -
+Particle id: 3	 Neigbour particles: 33 
+Particle id: 21	 Neigbour particles: 44 
+Particle id: 4	 Neigbour particles: 18 
+Particle id: 47	 Neigbour particles: 34 
+Particle id: 11	 Neigbour particles: -
+Particle id: 25	 Neigbour particles: 9 16 
+Particle id: 7	 Neigbour particles: 22 45 
+Particle id: 15	 Neigbour particles: -
+Particle id: 20	 Neigbour particles: 5 
+Particle id: 16	 Neigbour particles: 25 
+Particle id: 37	 Neigbour particles: 2 9 14 28 
+Particle id: 40	 Neigbour particles: 6 27 
+Particle id: 10	 Neigbour particles: 35 46 
+Particle id: 18	 Neigbour particles: 4 29 
+Particle id: 13	 Neigbour particles: 0 
+Particle id: 30	 Neigbour particles: 38 
+Particle id: 38	 Neigbour particles: 30 
+Particle id: 9	 Neigbour particles: 2 14 25 37 
+Particle id: 12	 Neigbour particles: -
+Particle id: 28	 Neigbour particles: 14 22 37 
+Particle id: 5	 Neigbour particles: 20 
+Particle id: 36	 Neigbour particles: -
+Particle id: 41	 Neigbour particles: -
+Particle id: 34	 Neigbour particles: 47 
+Particle id: 46	 Neigbour particles: 10 35 

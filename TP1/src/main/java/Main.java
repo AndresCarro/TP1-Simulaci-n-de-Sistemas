@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        //oneIteration(config);
+        oneIteration();
 
-        MAnalysis();
+        //MAnalysis();
 
         //NAnalysis();
     }
@@ -57,6 +57,7 @@ public class Main {
         if(config == null) {
             return;
         }
+        System.out.println(config.getM() + " " + config.getL() + " " +config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
 
         try {
             FileWriter writer = new FileWriter("NAnalysis.csv");
@@ -91,6 +92,7 @@ public class Main {
         if(config == null) {
             return;
         }
+        System.out.println(config.getM() + " " + config.getL() + " " +config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
 
         double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
         SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
