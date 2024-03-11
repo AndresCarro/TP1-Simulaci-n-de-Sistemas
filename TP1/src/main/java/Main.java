@@ -9,21 +9,24 @@ public class Main {
 
         //oneIteration(config);
 
-        TimeMAnalysis();
+        MAnalysis();
+
+        //NAnalysis();
     }
 
-    public static void TimeMAnalysis(){
+    public static void MAnalysis(){
         SimulationConfig config = readConfig("inputMTest.json");
         if(config == null) {
             return;
         }
-
+        System.out.println(config.getL() + " " +config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
         try {
             FileWriter writer = new FileWriter("TimeMAnalysis.csv");
             writer.write("Method,M,Time,results");
+            double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
 
-            for (int M = 1; M < 40; M++) {
-                double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
+
+            for (int M = 1; M < 50; M++) {
                 SimulationFactory simulator = new SimulationFactory(M, config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
 
                 long startTimeCIM = System.currentTimeMillis();
@@ -31,6 +34,9 @@ public class Main {
                 long endTimeCIM = System.currentTimeMillis();
                 long tiempoCIM = endTimeCIM - startTimeCIM;
                 writer.write("\nCIM," + M + "," + tiempoCIM + "," + simulator.NeighboursCIMCount());
+            }
+            for (int M = 1; M < 50; M++) {
+                SimulationFactory simulator = new SimulationFactory(M, config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
 
                 long startTimeForce = System.currentTimeMillis();
                 simulator.Force();
@@ -45,6 +51,40 @@ public class Main {
         }
 
     }
+
+    public static void NAnalysis(){
+        SimulationConfig config = readConfig("inputNTest.json");
+        if(config == null) {
+            return;
+        }
+
+        try {
+            FileWriter writer = new FileWriter("NAnalysis.csv");
+            writer.write("Method,N,Time");
+
+            for (int N = 1; N < 3000; N++) {
+                SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), N, config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions());
+
+                long startTimeCIM = System.currentTimeMillis();
+                simulator.CIM();
+                long endTimeCIM = System.currentTimeMillis();
+                long tiempoCIM = endTimeCIM - startTimeCIM;
+                writer.write("\nCIM," + N + "," + tiempoCIM);
+
+                long startTimeForce = System.currentTimeMillis();
+                simulator.Force();
+                long endTimeForce = System.currentTimeMillis();
+                long tiempoForce = endTimeForce - startTimeForce;
+                writer.write("\nForce," + N + "," + tiempoForce);
+            }
+            writer.close();
+
+        } catch(IOException e){
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+
+    }
+
 
     public static void oneIteration(){
         SimulationConfig config = readConfig("input.json");
@@ -75,7 +115,7 @@ public class Main {
     public static SimulationConfig readConfig(String path){
         Gson gson = new Gson();
         SimulationConfig sConfig = null;
-        try (FileReader reader = new FileReader("input.json")) {
+        try (FileReader reader = new FileReader(path)) {
             sConfig = gson.fromJson(reader, SimulationConfig.class);
             //System.out.println(sConfig);
         } catch (IOException e) {

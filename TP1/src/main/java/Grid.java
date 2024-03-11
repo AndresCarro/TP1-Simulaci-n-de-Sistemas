@@ -48,6 +48,7 @@ public class Grid {
         }
         boolean aux = ParticleGrid[gridX][gridY].addParticle(particle);
 
+        /*
         if(aux){
             double relativeX = particle.getX() - gridX*Msize;
             double relativeY = particle.getY() - gridY*Msize;
@@ -105,6 +106,8 @@ public class Grid {
                 ParticleGrid[(gridX-1+M)%M][(gridY-1+M)%M].addParticle(particle);
             }
         }
+        */
+
         return aux;
     }
 

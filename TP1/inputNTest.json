@@ -1,9 +1,9 @@
 {
-  "M": 10,
+  "M": 16,
   "L": 20,
-  "radius": 0.75,
-  "N": 100,
-  "radiusNeighbour": 1.5,
+  "radius": 0.25,
+  "N": 1000,
+  "radiusNeighbour": 1,
   "boundaryConditions": true,
   "particlesInput": "MTest.txt",
   "particle": 1
