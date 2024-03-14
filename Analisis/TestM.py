@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Cargar los datos del CSV
-data = pd.read_csv("TimeMAnalysis.csv")
+data = pd.read_csv("MAnalysis.csv")
 
 # Filtrar los datos por Método (CIM y Force)
 cim_data = data[data['Method'] == 'CIM']
