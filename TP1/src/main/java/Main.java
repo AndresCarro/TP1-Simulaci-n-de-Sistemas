@@ -104,14 +104,15 @@ public class Main {
         simulator.CIM();
         long endTimeCIM = System.currentTimeMillis();
         System.out.println("Tiempo de ejecución de CIM: " + (endTimeCIM - startTimeCIM) + " milisegundos");
-        simulator.printNeighboursCIM();
+        simulator.printNeighboursCIM(endTimeCIM-startTimeCIM);
 
 
         long startTimeForce = System.currentTimeMillis();
         simulator.Force();
         long endTimeForce = System.currentTimeMillis();
         System.out.println("Tiempo de ejecución de Force: " + (endTimeForce - startTimeForce) + " milisegundos");
-        simulator.printNeighboursForce();
+        simulator.printNeighboursForce(endTimeForce-startTimeForce);
+        simulator.writeOvitoOutput(config.getParticle());
     }
 
     public static SimulationConfig readConfig(String path){
@@ -119,7 +120,6 @@ public class Main {
         SimulationConfig sConfig = null;
         try (FileReader reader = new FileReader(path)) {
             sConfig = gson.fromJson(reader, SimulationConfig.class);
-            //System.out.println(sConfig);
         } catch (IOException e) {
             e.printStackTrace();
         }
