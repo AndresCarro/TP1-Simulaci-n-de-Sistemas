@@ -24,9 +24,21 @@ plt.show()
 '''
 Del grafico se ve que empieza a caer los resultados en
 Method,M,Time,results
-CIM,17,32,13706
-=>  el M que tengo que usar es 16
-Que justo 16 = 16/20 = 1.25 = radio de particula + radio de cercanía.
+CIM,13,204,116676
+CIM,14,202,116588
+=>  el M que tengo que usar es 13
+Que justo 13 => 20/13 = 1.53 = radio de particula * 2 + radio de cercanía.
+
+Tambien con otro intento por ejemplo con radio de 
+  "radius": 0.75,
+  "radiusNeighbour": 1.5,
+
+Method,M,Time,results
+CIM,6,2361,394756
+CIM,7,2150,394584
+
+=> el M que tengo que usar es 6
+Que justo 6 => 20/6 = 3.33 = radio de particula * 2 + radio de cercanía.
 '''
 
 # Graficar
