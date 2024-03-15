@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import json
 
-PARTICLES_COORDINATES_FILE = '../output.xyz'
+PARTICLES_COORDINATES_FILE = '../TP1/output.xyz'
 CONFIG_FILE = '../TP1/input.json'
-CIM_NEIGHBOURS_FILE = '../cim_output.json'
+CIM_NEIGHBOURS_FILE = '../TP1/cim_output.json'
 
 
 def read_coords_file(file_path):
@@ -48,8 +48,14 @@ def draw_particles(x_coords, y_coords, main_particle, n, radius, longitude, neig
     if y_coords[main_particle] - (radius + general_radius) < 0:
         circle_radius = plt.Circle((x_coords[main_particle], y_coords[main_particle] + longitude), radius + general_radius, color='black', fill=False)
         ax.add_patch(circle_radius)
-    if x_coords[main_particle] + (radius + general_radius) > longitude:
-        circle_radius = plt.Circle((0 - x_coords[main_particle], y_coords[main_particle]), radius + general_radius, color='black', fill=False)
+    if y_coords[main_particle] + (radius + general_radius) > longitude:
+        circle_radius = plt.Circle((y_coords[main_particle], 0 - y_coords[main_particle]), radius + general_radius, color='black', fill=False)
+        ax.add_patch(circle_radius)
+    if x_coords[main_particle] - (radius + general_radius) < 0 and y_coords[main_particle] - (radius + general_radius) < 0:
+        circle_radius = plt.Circle((x_coords[main_particle] + longitude, y_coords[main_particle] + longitude), radius + general_radius, color='black', fill=False)
+        ax.add_patch(circle_radius)
+    if x_coords[main_particle] + (radius + general_radius) > longitude and y_coords[main_particle] + (radius + general_radius) > longitude:
+        circle_radius = plt.Circle((0 - x_coords[main_particle], 0 - y_coords[main_particle]), radius + general_radius, color='black', fill=False)
         ax.add_patch(circle_radius)
 
 

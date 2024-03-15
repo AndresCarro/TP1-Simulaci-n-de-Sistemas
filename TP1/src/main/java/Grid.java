@@ -154,10 +154,19 @@ public class Grid {
 
     public boolean isNeighbour(Particle particle1, Particle particle2){
         double directx = Math.abs(particle1.getX() - particle2.getX());
-        double dx = (directx*2 > L && boundaryConditions)? (L - directx) : directx;
+        double dx, dy;
+        if(directx*2 > L && boundaryConditions){
+            dx = (L - directx);
+        }else{
+            dx = directx;
+        }
 
         double directy = Math.abs(particle1.getY() - particle2.getY());
-        double dy = (directy*2 > L && boundaryConditions)? (L - directy) : directy;
+        if(directy*2 > L && boundaryConditions){
+            dy = (L - directy);
+        }else{
+            dy = directy;
+        }
 
         //System.out.println(dy + "---" + dx);
         double hypotenuse = Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);

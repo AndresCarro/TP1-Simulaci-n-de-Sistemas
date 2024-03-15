@@ -24,6 +24,10 @@ public class SimulationFactory {
             }
             this.ParticlesList.add(auxParticle);
         }
+        //Particle 1000
+        //Particle borderParticle = new Particle(0.1, 0.1, radiusParticle);
+        //this.SimulatedGrid.addParticle(borderParticle);
+        //this.ParticlesList.add(borderParticle);
     }
 
     public SimulationFactory(int M, double L, double radiusParticle, double radiusNeighbour, boolean boundaryConditions, double[][] particles) {
