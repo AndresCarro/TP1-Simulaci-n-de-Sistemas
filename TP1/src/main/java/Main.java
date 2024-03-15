@@ -12,6 +12,8 @@ public class Main {
         //MAnalysis();
 
         //NAnalysis();
+
+        //MLAnalysis();
     }
 
     public static void MAnalysis(){
@@ -21,7 +23,7 @@ public class Main {
         }
         System.out.println(config.getL() + " " +config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
         try {
-            FileWriter writer = new FileWriter("TimeMAnalysis.csv");
+            FileWriter writer = new FileWriter("MAnalysis.csv");
             writer.write("Method,M,Time,results");
             double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
 
@@ -86,6 +88,43 @@ public class Main {
 
     }
 
+    public static void MLAnalysis(){
+        SimulationConfig config = readConfig("inputMLTest.json");
+        if(config == null) {
+            return;
+        }
+        System.out.println(config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
+        try {
+            FileWriter writer = new FileWriter("MLAnalysis.csv");
+            writer.write("N,M,L");
+
+            for(int L = 1; L < 150; L++){
+                boolean next = false;
+                int Mout = 0, Lout = 0, Nout = 0;
+                for (int M = 1; M < 300 && !next; M++) {
+                    SimulationFactory simulator = new SimulationFactory(M, L, config.getN(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions());
+                    System.out.println(L + " + " + M + '\n');
+
+                    simulator.CIM();
+                    simulator.Force();
+                    if(simulator.NeighboursForceCount() == simulator.NeighboursCIMCount()){
+                        Mout = M;
+                        Lout = L;
+                        Nout = config.getN();
+                    }else{
+                        next = true;
+                    }
+                }
+                writer.write("\n" + Nout + ", " + Mout + "," + Lout);
+            }
+
+            writer.close();
+
+        } catch(IOException e){
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+
+    }
 
     public static void oneIteration(){
         SimulationConfig config = readConfig("TP1/input.json");
