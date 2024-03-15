@@ -16,6 +16,34 @@ public class Main {
         //MLAnalysis();
     }
 
+    public static void oneIteration(){
+        SimulationConfig config = readConfig("input.json");
+        if(config == null) {
+            return;
+        }
+        System.out.println("M:" + config.getM() + " L:" + config.getL() + "N:" + config.getN() + " Radius:" +config.getRadius() + " RadiusNei:" +config.getRadiusNeighbour() + " Boundary:" + config.getBoundaryConditions());
+
+        SimulationFactory simulator = new SimulationFactory(config.getM(),config.getL(),config.getN(),config.getRadius(),config.getRadiusNeighbour(),config.getBoundaryConditions());
+
+        int particleSelected = config.getParticle();
+        System.out.println("La particula a revisar es: " + particleSelected);
+
+        long startTimeCIM = System.currentTimeMillis();
+        simulator.CIM();
+        long endTimeCIM = System.currentTimeMillis();
+        System.out.println("Tiempo de ejecución de CIM: " + (endTimeCIM - startTimeCIM) + " milisegundos");
+        simulator.printNeighboursCIM(endTimeCIM-startTimeCIM);
+
+
+        long startTimeForce = System.currentTimeMillis();
+        simulator.Force();
+        long endTimeForce = System.currentTimeMillis();
+        System.out.println("Tiempo de ejecución de Force: " + (endTimeForce - startTimeForce) + " milisegundos");
+        simulator.printNeighboursForce(endTimeForce-startTimeForce);
+        simulator.writeOvitoOutput(config.getParticle());
+        simulator.writeOutputInJson("cim_output.json");
+    }
+
     public static void MAnalysis(){
         SimulationConfig config = readConfig("inputMTest.json");
         if(config == null) {
@@ -59,7 +87,7 @@ public class Main {
         if(config == null) {
             return;
         }
-        System.out.println(config.getM() + " " + config.getL() + " " +config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
+        System.out.println("M:" + config.getM() + " L:" + config.getL() + " Radius:" +config.getRadius() + " RadiusNei:" +config.getRadiusNeighbour() + " Boundary:" + config.getBoundaryConditions());
 
         try {
             FileWriter writer = new FileWriter("NAnalysis.csv");
@@ -124,36 +152,6 @@ public class Main {
             System.out.println("Error al escribir en el archivo: " + e.getMessage());
         }
 
-    }
-
-    public static void oneIteration(){
-        SimulationConfig config = readConfig("TP1/input.json");
-        if(config == null) {
-            return;
-        }
-        System.out.println(config.getM() + " " + config.getL() + " " +config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
-
-        /*double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
-        SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);*/
-        SimulationFactory simulator = new SimulationFactory(config.getM(),config.getL(),config.getN(),config.getRadius(),config.getRadiusNeighbour(),config.getBoundaryConditions());
-
-        int particleSelected = config.getParticle();
-        System.out.println("La particula a revisar es: " + particleSelected);
-
-        long startTimeCIM = System.currentTimeMillis();
-        simulator.CIM();
-        long endTimeCIM = System.currentTimeMillis();
-        System.out.println("Tiempo de ejecución de CIM: " + (endTimeCIM - startTimeCIM) + " milisegundos");
-        simulator.printNeighboursCIM(endTimeCIM-startTimeCIM);
-
-
-        long startTimeForce = System.currentTimeMillis();
-        simulator.Force();
-        long endTimeForce = System.currentTimeMillis();
-        System.out.println("Tiempo de ejecución de Force: " + (endTimeForce - startTimeForce) + " milisegundos");
-        simulator.printNeighboursForce(endTimeForce-startTimeForce);
-        simulator.writeOvitoOutput(config.getParticle());
-        simulator.writeOutputInJson("cim_output.json");
     }
 
     public static SimulationConfig readConfig(String path){

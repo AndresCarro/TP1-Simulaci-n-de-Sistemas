@@ -1,3 +1,6 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -108,21 +111,23 @@ public class SimulationFactory {
         this.particleNeighboursForce = new HashMap<>();
         for(int i=0; i<ParticlesList.size(); i++) {
             particleNeighboursForce.putIfAbsent(ParticlesList.get(i),new ArrayList<>());
-            for(int j=i+1; j<ParticlesList.size(); j++) {
+            for(int j=0; j<ParticlesList.size(); j++) {
                 //System.out.println("Calculando: " + ParticlesList.get(i) + "--" + ParticlesList.get(j));
-                if(SimulatedGrid.isNeighbour(ParticlesList.get(i), ParticlesList.get(j))) {
-                    //System.out.println("-------");
-                    //System.out.println("Son vecinas");
-                    //System.out.println(ParticlesList.get(i));
-                    //System.out.println(ParticlesList.get(j));
-                    //System.out.println("-------");
-                    particleNeighboursForce.putIfAbsent(ParticlesList.get(i),new LinkedList<>());
-                    if(!particleNeighboursForce.get(ParticlesList.get(i)).contains(ParticlesList.get(j))){
-                        particleNeighboursForce.get(ParticlesList.get(i)).add(ParticlesList.get(j));
-                    }
-                    particleNeighboursForce.putIfAbsent(ParticlesList.get(j),new LinkedList<>());
-                    if(!particleNeighboursForce.get(ParticlesList.get(j)).contains(ParticlesList.get(i))){
-                        particleNeighboursForce.get(ParticlesList.get(j)).add(ParticlesList.get(i));
+                if (!ParticlesList.get(i).equals(ParticlesList.get(j))) {
+                    if (SimulatedGrid.isNeighbour(ParticlesList.get(i), ParticlesList.get(j))) {
+                        //System.out.println("-------");
+                        //System.out.println("Son vecinas");
+                        //System.out.println(ParticlesList.get(i));
+                        //System.out.println(ParticlesList.get(j));
+                        //System.out.println("-------");
+                        particleNeighboursForce.putIfAbsent(ParticlesList.get(i), new LinkedList<>());
+                        if (!particleNeighboursForce.get(ParticlesList.get(i)).contains(ParticlesList.get(j))) {
+                            particleNeighboursForce.get(ParticlesList.get(i)).add(ParticlesList.get(j));
+                        }
+                        particleNeighboursForce.putIfAbsent(ParticlesList.get(j), new LinkedList<>());
+                        if (!particleNeighboursForce.get(ParticlesList.get(j)).contains(ParticlesList.get(i))) {
+                            particleNeighboursForce.get(ParticlesList.get(j)).add(ParticlesList.get(i));
+                        }
                     }
                 }
             }
@@ -179,7 +184,7 @@ public class SimulationFactory {
     }
 
     public void writeOutputInJson(String filename) {
-        SimulationOutput output = new SimulationOutput();
+        main.java.SimulationOutput output = new main.java.SimulationOutput();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         for(Particle p : particleNeighboursCIM.keySet()) {
             List<Integer> neighboursIds = new ArrayList<>();

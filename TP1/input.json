@@ -1,10 +1,10 @@
 {
-  "M": 10,
+  "M": 13,
   "L": 20,
   "radius": 0.25,
-  "N": 1500,
+  "N": 1000,
   "radiusNeighbour": 1,
   "boundaryConditions": true,
-  "particlesInput": "TP1/MTest.txt",
+  "particlesInput": null,
   "particle": 888
 }

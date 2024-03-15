@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Cargar los datos del CSV
-data = pd.read_csv("MAnalysis.csv")
+data = pd.read_csv("../TP1/MAnalysis.csv")
 
 # Filtrar los datos por Método (CIM y Force)
 cim_data = data[data['Method'] == 'CIM']
@@ -11,6 +11,7 @@ force_data = data[data['Method'] == 'Force']
 # Graficar
 plt.plot(cim_data['M'], cim_data['results'], label='CIM', color='blue')
 plt.plot(force_data['M'], force_data['results'], label='Force', color='red')
+
 
 # Configuración del gráfico
 plt.xlabel('M')
@@ -44,6 +45,8 @@ Que justo 6 => 20/6 = 3.33 = radio de particula * 2 + radio de cercanía.
 # Graficar
 plt.plot(cim_data['M'], cim_data['Time'], label='CIM', color='blue')
 plt.plot(force_data['M'], force_data['Time'], label='Force', color='red')
+
+
 
 # Configuración del gráfico
 plt.xlabel('M')
