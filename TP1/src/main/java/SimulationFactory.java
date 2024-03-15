@@ -178,6 +178,24 @@ public class SimulationFactory {
         }
     }
 
+    public void writeOutputInJson(String filename) {
+        SimulationOutput output = new SimulationOutput();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        for(Particle p : particleNeighboursCIM.keySet()) {
+            List<Integer> neighboursIds = new ArrayList<>();
+            for(Particle neighbours : particleNeighboursCIM.get(p)) {
+                neighboursIds.add(neighbours.getId());
+            }
+            output.getParticlesNeighbours().put(p.getId(),neighboursIds);
+        }
+        String stringOutput = gson.toJson(output);
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write(stringOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void writeOvitoOutput(int particleId){
         String filename = "output.xyz";
         String COMMON_PARTICLE = "0";

@@ -3,6 +3,7 @@ import json
 
 PARTICLES_COORDINATES_FILE = '../output.xyz'
 CONFIG_FILE = '../TP1/input.json'
+CIM_NEIGHBOURS_FILE = '../cim_output.json'
 
 
 def read_coords_file(file_path):
@@ -32,17 +33,39 @@ def read_config_file(file_path):
     return config_data
 
 
-def draw_particles(x_coords, y_coords, main_particle, n, radius):
-    colors = []
-    for i in range(0, n):
-        if i == main_particle:
-            colors.append('r')
-        else:
-            colors.append('b')
+def draw_particles(x_coords, y_coords, main_particle, n, radius, longitude, neighbours, general_radius):
+    plt.figure(figsize=(8,8))
+    ax = plt.gca()
+    circle_radius = plt.Circle((x_coords[main_particle], y_coords[main_particle]), radius + general_radius, color='black', fill=False)
+    ax.add_patch(circle_radius)
 
-    plt.scatter(x_coords, y_coords, c=colors, s=50, alpha=1)
-    circle_radius = plt.Circle((x_coords[main_particle], y_coords[main_particle]), radius, color='black', fill=False)
-    plt.gca().add_patch(circle_radius)
+    if x_coords[main_particle] - (radius + general_radius) < 0:
+        circle_radius = plt.Circle((x_coords[main_particle] + longitude, y_coords[main_particle]), radius + general_radius, color='black', fill=False)
+        ax.add_patch(circle_radius)
+    if x_coords[main_particle] + (radius + general_radius) > longitude:
+        circle_radius = plt.Circle((0 - x_coords[main_particle], y_coords[main_particle]), radius + general_radius, color='black', fill=False)
+        ax.add_patch(circle_radius)
+    if y_coords[main_particle] - (radius + general_radius) < 0:
+        circle_radius = plt.Circle((x_coords[main_particle], y_coords[main_particle] + longitude), radius + general_radius, color='black', fill=False)
+        ax.add_patch(circle_radius)
+    if x_coords[main_particle] + (radius + general_radius) > longitude:
+        circle_radius = plt.Circle((0 - x_coords[main_particle], y_coords[main_particle]), radius + general_radius, color='black', fill=False)
+        ax.add_patch(circle_radius)
+
+
+    for id in neighbours:
+        if id == str(main_particle):
+            circle = plt.Circle((x_coords[int(id)], y_coords[int(id)]), radius=general_radius, color='green', fill=True)
+            ax.add_patch(circle)
+        elif int(id) in neighbours[str(main_particle)]:
+            circle = plt.Circle((x_coords[int(id)], y_coords[int(id)]), radius=general_radius, color='red', fill=True)
+            ax.add_patch(circle)
+        else:
+            circle = plt.Circle((x_coords[int(id)], y_coords[int(id)]), radius=general_radius, color='blue', fill=True)
+            ax.add_patch(circle)
+    plt.xlim(0, longitude)
+    plt.ylim(0, longitude)
+    ax.set_aspect('equal', adjustable='box')
     plt.xlabel('X Position')
     plt.ylabel('Y Position')
     plt.title('2D Graphic of Particles')
@@ -50,9 +73,16 @@ def draw_particles(x_coords, y_coords, main_particle, n, radius):
     plt.show()
 
 
+def read_cim_neighbours(file_path):
+    with open(file_path, 'r') as file:
+        particle_neighbours = json.load(file)
+    return particle_neighbours
+
+
 if __name__ == '__main__':
     x_positions, y_positions = read_coords_file(PARTICLES_COORDINATES_FILE)
     config = read_config_file(CONFIG_FILE)
-    draw_particles(x_positions, y_positions, config['particle'], config['N'], config['radius'])
+    neighbours = read_cim_neighbours(CIM_NEIGHBOURS_FILE)
+    draw_particles(x_positions, y_positions, config['particle'], config['N'], config['radiusNeighbour'], config['L'], neighbours['particlesNeighbours'], config['radius'])
 
 

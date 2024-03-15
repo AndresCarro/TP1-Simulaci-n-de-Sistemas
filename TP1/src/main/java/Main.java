@@ -88,14 +88,15 @@ public class Main {
 
 
     public static void oneIteration(){
-        SimulationConfig config = readConfig("input.json");
+        SimulationConfig config = readConfig("TP1/input.json");
         if(config == null) {
             return;
         }
         System.out.println(config.getM() + " " + config.getL() + " " +config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
 
-        double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
-        SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);
+        /*double[][] particles = readParticles(config.getParticlesInput()).toArray(new double[0][]);
+        SimulationFactory simulator = new SimulationFactory(config.getM(), config.getL(), config.getRadius(), config.getRadiusNeighbour(), config.getBoundaryConditions(), particles);*/
+        SimulationFactory simulator = new SimulationFactory(config.getM(),config.getL(),config.getN(),config.getRadius(),config.getRadiusNeighbour(),config.getBoundaryConditions());
 
         int particleSelected = config.getParticle();
         System.out.println("La particula a revisar es: " + particleSelected);
@@ -113,6 +114,7 @@ public class Main {
         System.out.println("Tiempo de ejecución de Force: " + (endTimeForce - startTimeForce) + " milisegundos");
         simulator.printNeighboursForce(endTimeForce-startTimeForce);
         simulator.writeOvitoOutput(config.getParticle());
+        simulator.writeOutputInJson("cim_output.json");
     }
 
     public static SimulationConfig readConfig(String path){
