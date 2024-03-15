@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Lee el archivo CSV
-df = pd.read_csv('MLAnalysis.csv')
+df = pd.read_csv('../TP1/MLAnalysis.csv')
 
 # Extrae las columnas M y L
 M = df['M']

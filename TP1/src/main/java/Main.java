@@ -121,7 +121,8 @@ public class Main {
         if(config == null) {
             return;
         }
-        System.out.println(config.getRadius() + " " +config.getRadiusNeighbour() + " " + config.getBoundaryConditions());
+        System.out.println("N:" + config.getL() + " Radius:" +config.getRadius() + " RadiusNei:" +config.getRadiusNeighbour() + " Boundary:" + config.getBoundaryConditions());
+
         try {
             FileWriter writer = new FileWriter("MLAnalysis.csv");
             writer.write("N,M,L");
